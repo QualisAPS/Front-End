@@ -1,4 +1,4 @@
-//import FormLogin from './components/FormLogin';
+import ForgotPasswordForm from './components/Form';
 
 export default function ForgotPasswordPage() {
   return (
@@ -7,7 +7,7 @@ export default function ForgotPasswordPage() {
       style={{ height: '100vh' }}
     >
       <main>
-        <p>esqueceu senha</p>
+        <ForgotPasswordForm />
       </main>
     </div>
   );
