@@ -14,7 +14,12 @@ const RegisterForm = () => {
     formState: { errors }
   } = useForm<IRegisterForm>({
     defaultValues: {
-      fullName: ''
+      fullName: '',
+      registration: '',
+      cpf: '',
+      email: '',
+      recordType: '',
+      team: ''
     }
   });
   const onSubmit: SubmitHandler<IRegisterForm> = (data) => console.log(data);
@@ -47,6 +52,154 @@ const RegisterForm = () => {
                 />
               )}
             />
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <label
+                htmlFor="registration"
+                className=" mb-2 block text-sm font-medium text-[#141414]"
+              >
+                Matrícula
+              </label>
+              <Controller
+                name="registration"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <input
+                    type="text"
+                    id="registration"
+                    className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Digite sua matrícula"
+                    required
+                    {...field}
+                    //aria-invalid={errors.email ? 'true' : 'false'}
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="cpf"
+                className=" mb-2 block text-sm font-medium text-[#141414]"
+              >
+                Cpf
+              </label>
+              <Controller
+                name="cpf"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <input
+                    type="text"
+                    id="cpf"
+                    className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="***.***.***-**"
+                    required
+                    {...field}
+                    //aria-invalid={errors.email ? 'true' : 'false'}
+                  />
+                )}
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className=" mb-2 block text-sm font-medium text-[#141414]"
+            >
+              E-mail
+            </label>
+            <Controller
+              name="email"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <input
+                  type="text"
+                  id="email"
+                  className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  placeholder="Digite seu email"
+                  required
+                  {...field}
+                  //aria-invalid={errors.email ? 'true' : 'false'}
+                />
+              )}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className=" mb-2 block text-sm font-medium text-[#141414]"
+            >
+              Confirme seu E-mail
+            </label>
+            <Controller
+              name="email"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <input
+                  type="text"
+                  id="email"
+                  className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  placeholder="Digite seu email"
+                  required
+                  {...field}
+                  //aria-invalid={errors.email ? 'true' : 'false'}
+                />
+              )}
+            />
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <label
+                htmlFor="recordType"
+                className=" mb-2 block text-sm font-medium text-[#141414]"
+              >
+                Tipo de Cadastro
+              </label>
+              <Controller
+                name="recordType"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <input
+                    type="text"
+                    id="recordType"
+                    className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Digite sua matrícula"
+                    required
+                    {...field}
+                    //aria-invalid={errors.email ? 'true' : 'false'}
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="team"
+                className=" mb-2 block text-sm font-medium text-[#141414]"
+              >
+                Equipe
+              </label>
+              <Controller
+                name="team"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <input
+                    type="text"
+                    id="team"
+                    className="bg-gray-50 border-gray-300 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 block w-full rounded-lg border p-2.5 text-sm text-[#141414] focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Equipe"
+                    required
+                    {...field}
+                    //aria-invalid={errors.email ? 'true' : 'false'}
+                  />
+                )}
+              />
+            </div>
           </div>
 
           <button
