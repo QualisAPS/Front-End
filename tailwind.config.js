@@ -20,7 +20,17 @@ module.exports = {
         ocean: '#41B6BA',
         green: '#13BA53',
         gray: '#DEDDD7',
-        'green-variant': '#205C5E'
+        'green-variant': '#205C5E',
+        50: '#eff6ff',
+        100: '#dbeafe',
+        200: '#bfdbfe',
+        300: '#93c5fd',
+        400: '#60a5fa',
+        500: '#3b82f6',
+        600: '#2563eb',
+        700: '#1d4ed8',
+        800: '#1e40af',
+        900: '#1e3a8a'
       }
     }
   },
