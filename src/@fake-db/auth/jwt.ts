@@ -21,11 +21,35 @@ const users: UserDataType[] = [
   },
   {
     id: 2,
-    role: 'client',
-    password: 'client',
-    fullName: 'Jane Doe',
-    username: 'janedoe',
-    email: 'client@vuexy.com'
+    role: 'gsap',
+    password: 'gsap1',
+    fullName: 'Gsap',
+    username: 'gsap',
+    email: 'gsap@qualis.com'
+  },
+  {
+    id: 3,
+    role: 'esf',
+    password: 'esf',
+    fullName: 'Esf',
+    username: 'esf',
+    email: 'esf@qualis.com'
+  },
+  {
+    id: 4,
+    role: 'nasf',
+    password: 'nasf',
+    fullName: 'Nasf',
+    username: 'nasf',
+    email: 'nasf@qualis.com'
+  },
+  {
+    id: 5,
+    role: 'diraps',
+    password: 'diraps',
+    fullName: 'Diraps',
+    username: 'diraps',
+    email: 'diraps@qualis.com'
   }
 ]
 

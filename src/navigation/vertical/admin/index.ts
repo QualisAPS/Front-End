@@ -1,7 +1,7 @@
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
-const navigation = (): VerticalNavItemsType => {
+const adminNavigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Home',
@@ -10,6 +10,11 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Second Page',
+      path: '/second-page',
+      icon: 'tabler:mail'
+    },
+    {
+      title: 'Pagina Admin',
       path: '/second-page',
       icon: 'tabler:mail'
     },
@@ -23,4 +28,4 @@ const navigation = (): VerticalNavItemsType => {
   ]
 }
 
-export default navigation
+export default adminNavigation

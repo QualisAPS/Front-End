@@ -70,7 +70,7 @@ const schema = yup.object().shape({
   password: yup.string().min(5).required()
 })
 
-const LoginV1 = () => {
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   // ** Hook
@@ -176,7 +176,7 @@ const LoginV1 = () => {
                 }}
               >
                 <FormControlLabel control={<Checkbox />} label='Lembrar Me' />
-                <Typography component={LinkStyled} href='/pages/auth/forgot-password-v1'>
+                <Typography component={LinkStyled} href='/forgot-password'>
                   Esqueceu sua senha?
                 </Typography>
               </Box>
@@ -197,8 +197,8 @@ const LoginV1 = () => {
   )
 }
 
-LoginV1.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-LoginV1.guestGuard = true
+LoginPage.guestGuard = true
 
-export default LoginV1
+export default LoginPage

@@ -51,6 +51,7 @@ const Footer = (props: Props) => {
     >
       <Box
         className='footer-content-container'
+        component='section'
         sx={{
           px: 6,
           width: '100%',

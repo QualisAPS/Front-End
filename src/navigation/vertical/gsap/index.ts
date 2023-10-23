@@ -1,15 +1,20 @@
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
-const navigation = (): VerticalNavItemsType => {
+const gsapNavigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Home',
+      title: 'Início',
       path: '/home',
       icon: 'tabler:smart-home'
     },
     {
       title: 'Second Page',
+      path: '/second-page',
+      icon: 'tabler:mail'
+    },
+    {
+      title: 'Pagina Gsap',
       path: '/second-page',
       icon: 'tabler:mail'
     },
@@ -23,4 +28,4 @@ const navigation = (): VerticalNavItemsType => {
   ]
 }
 
-export default navigation
+export default gsapNavigation
