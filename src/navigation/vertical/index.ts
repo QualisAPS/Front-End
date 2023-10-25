@@ -9,8 +9,22 @@ const navigation = (): VerticalNavItemsType => {
       icon: 'tabler:smart-home'
     },
     {
-      title: 'Second Page',
-      path: '/second-page',
+      title: 'Diagnóstico Inicial',
+      icon: 'tabler:align-box-bottom-left',
+      children: [
+        {
+          title: 'Estrutura',
+          path: '/estrutura'
+        },
+        {
+          title: 'Tipologia',
+          path: '/tipologia'
+        }
+      ]
+    },
+    {
+      title: 'Integra SES',
+      path: '/integra',
       icon: 'tabler:mail'
     },
     {
