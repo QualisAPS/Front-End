@@ -5,7 +5,7 @@ const gsapNavigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Início',
-      path: '/home',
+      path: '/gsap/home',
       icon: 'tabler:smart-home'
     },
     {

@@ -5,7 +5,7 @@ const adminNavigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Home',
-      path: '/home',
+      path: '/admin/home',
       icon: 'tabler:smart-home'
     },
     {
