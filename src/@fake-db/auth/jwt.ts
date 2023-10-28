@@ -37,11 +37,11 @@ const users: UserDataType[] = [
   },
   {
     id: 4,
-    role: 'nasf',
-    password: 'nasf',
-    fullName: 'Nasf',
-    username: 'nasf',
-    email: 'nasf@qualis.com'
+    role: 'coaps',
+    password: 'coaps',
+    fullName: 'Coaps',
+    username: 'coaps',
+    email: 'coaps@qualis.com'
   },
   {
     id: 5,

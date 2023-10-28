@@ -28,10 +28,51 @@ const defineRulesFor = (role: string, subject: string) => {
       'painel-gsap',
       'painel-nasf',
       'painel-equipe',
-      'painel-paq'
+      'painel-paq',
+      'resultado-gsap',
+      'resultado-equipe',
+      'mapa',
+      'resultado-paq',
+      'dado-equipe',
+      'dado-gsap',
+      'dado-nasf',
+      'dado-autoavaliacao-equipe',
+      'dado-autoavaliacao-gsap',
+      'ajuda',
+      'profissional',
+      'email',
+      'autorizacao'
     ])
   } else if (role === 'gsap') {
-    can('read', ['home', 'integra', 'tipologia', 'estrutura'])
+    can('read', [
+      'home',
+      'integra',
+      'tipologia',
+      'estrutura',
+      'ajuda',
+      '1-ciclo',
+      'instrumento-aa-gsap',
+      'graficos-aa-gsap',
+      'padroes-paq',
+      'editar-paq-gsap',
+      'matriz-paq-gsap',
+      'avaliacao-in-loco',
+      'certificacao',
+      'relatorio-tematico',
+      '2-ciclo',
+      '2-ciclo-instrumento-aa-gsap',
+      '2-ciclo-graficos-aa-gsap',
+      '2-ciclo-padroes-paq',
+      '2-ciclo-editar-paq-gsap',
+      '2-ciclo-matriz-paq-gsap',
+      '2-ciclo-avaliacao-in-loco',
+      '2-ciclo-certificacao',
+      '2-ciclo-relatorio-tematico'
+    ])
+  } else if (role === 'coaps') {
+    can('read', ['home'])
+  } else if (role === 'diraps') {
+    can('read', ['home'])
   } else {
     can(['read', 'create', 'update', 'delete'], subject)
   }
