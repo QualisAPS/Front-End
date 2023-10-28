@@ -20,9 +20,18 @@ const defineRulesFor = (role: string, subject: string) => {
   const { can, rules } = new AbilityBuilder(AppAbility)
 
   if (role === 'admin') {
-    can('manage', 'all')
+    can('read', [
+      'home',
+      'integra',
+      'tipologia',
+      'estrutura',
+      'painel-gsap',
+      'painel-nasf',
+      'painel-equipe',
+      'painel-paq'
+    ])
   } else if (role === 'gsap') {
-    can('manage', 'all')
+    can('read', ['home', 'integra', 'tipologia', 'estrutura'])
   } else {
     can(['read', 'create', 'update', 'delete'], subject)
   }

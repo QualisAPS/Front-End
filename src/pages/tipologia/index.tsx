@@ -56,4 +56,9 @@ const Tipologia = () => {
   )
 }
 
+Tipologia.acl = {
+  action: 'read',
+  subject: 'tipologia'
+}
+
 export default Tipologia

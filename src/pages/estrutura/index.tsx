@@ -61,4 +61,9 @@ const Estrutura = () => {
   )
 }
 
+Estrutura.acl = {
+  action: 'read',
+  subject: 'estrutura'
+}
+
 export default Estrutura
