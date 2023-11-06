@@ -8,8 +8,8 @@ import CardContent from '@mui/material/CardContent'
 const HomeAdmin = () => {
   return (
     <Grid container spacing={6} component='section'>
-      <Grid item xs={12}>
-        <Card component='article'>
+      <Grid item xs={6} component='article'>
+        <Card>
           <CardHeader title='Dados do(a) Usuário(a)'></CardHeader>
           <CardContent>
             <Typography sx={{ mb: 2 }}>
