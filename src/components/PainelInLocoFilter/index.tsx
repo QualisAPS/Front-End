@@ -120,7 +120,7 @@ const CustomInput = forwardRef((props: CustomInputProps, ref) => {
 })
 /* eslint-enable */
 
-const TipologiaTable = () => {
+const PainelInLocoFilter = () => {
   // ** State
   const [value, setValue] = useState<string>('')
   const [statusValue, setStatusValue] = useState<string>('')
@@ -250,25 +250,6 @@ const TipologiaTable = () => {
                     select
                     fullWidth
                     defaultValue='Todos'
-                    label='GSAP'
-                    SelectProps={{
-                      value: statusValue,
-                      displayEmpty: true,
-                      onChange: e => handleStatusValue(e)
-                    }}
-                  >
-                    <MenuItem value=''>Todos</MenuItem>
-                    <MenuItem value='basic'>Basic</MenuItem>
-                    <MenuItem value='company'>Company</MenuItem>
-                    <MenuItem value='enterprise'>Enterprise</MenuItem>
-                    <MenuItem value='team'>Team</MenuItem>
-                  </CustomTextField>
-                </Grid>
-                <Grid item sm={12} xs={12}>
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue='Todos'
                     label='Unidade Básica de Saúde'
                     SelectProps={{
                       value: statusValue,
@@ -310,4 +291,4 @@ const TipologiaTable = () => {
   )
 }
 
-export default TipologiaTable
+export default PainelInLocoFilter

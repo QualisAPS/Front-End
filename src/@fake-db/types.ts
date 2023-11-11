@@ -11,3 +11,19 @@ export type DataGridRowType = {
   start_date: string
   experience: string
 }
+
+export type FaqQAndAType = {
+  id: string
+  answer: string
+  question: string
+}
+
+export type FaqType = {
+  [key: string]: {
+    id: string
+    icon: string
+    title: string
+    subtitle: string
+    qandA: FaqQAndAType[]
+  }
+}

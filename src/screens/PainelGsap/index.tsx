@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
+import Filters from 'src/components/Filters'
+
 const PainelGsap = () => {
   return (
     <Grid container spacing={6} component='section'>
@@ -12,7 +14,7 @@ const PainelGsap = () => {
         <Card component='article'>
           <CardHeader title='Painel GSAP'></CardHeader>
           <CardContent>
-            <Typography sx={{ mb: 2 }}>a</Typography>
+            <Filters />
           </CardContent>
         </Card>
       </Grid>
