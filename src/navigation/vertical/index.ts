@@ -109,10 +109,10 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Relatorios Temáticos',
-      path: '/mapa',
+      path: '/relatorios-tematicos',
       icon: 'tabler:smart-home',
       action: 'read',
-      subject: 'relatorio-tematico'
+      subject: 'relatorios-tematicos'
     },
 
     /* 2 ciclo */
