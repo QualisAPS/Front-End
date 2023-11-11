@@ -88,10 +88,17 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Avaliação in Loco',
-      path: '/mapa',
+      path: '/avaliacao-in-loco',
       icon: 'tabler:smart-home',
       action: 'read',
       subject: 'avaliacao-in-loco'
+    },
+    {
+      title: 'Painel in Loco',
+      path: '/painel-in-loco',
+      icon: 'tabler:smart-home',
+      action: 'read',
+      subject: 'painel-in-loco'
     },
     {
       title: 'Certificação',
