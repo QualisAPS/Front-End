@@ -46,7 +46,8 @@ const defineRulesFor = (role: string, subject: string) => {
       'ajuda',
       'profissional',
       'email',
-      'autorizacao'
+      'autorizacao',
+      'profile'
     ])
   } else if (role === 'gsap') {
     can('read', [
@@ -74,7 +75,8 @@ const defineRulesFor = (role: string, subject: string) => {
       '2-ciclo-matriz-paq-gsap',
       '2-ciclo-avaliacao-in-loco',
       '2-ciclo-certificacao',
-      '2-ciclo-relatorio-tematico'
+      '2-ciclo-relatorio-tematico',
+      'profile'
     ])
   } else if (role === 'coaps') {
     can('read', ['home'])
