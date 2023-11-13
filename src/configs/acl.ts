@@ -47,7 +47,8 @@ const defineRulesFor = (role: string, subject: string) => {
       'profissional',
       'email',
       'autorizacao',
-      'profile'
+      'profile',
+      'profissionais'
     ])
   } else if (role === 'gsap') {
     can('read', [

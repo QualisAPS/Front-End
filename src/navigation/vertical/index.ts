@@ -312,17 +312,17 @@ const navigation = (): VerticalNavItemsType => {
     {
       sectionTitle: 'Controles de Acesso',
       action: 'read',
-      subject: 'profissional'
+      subject: 'profissionais'
     },
     {
-      path: '/acl',
+      path: '/profissionais',
       title: 'Profissionais',
       icon: 'tabler:shield',
       action: 'read',
-      subject: 'profissional'
+      subject: 'profissionais'
     },
     {
-      path: '/acl',
+      path: '/autorizacao',
       title: 'Autorização',
       icon: 'tabler:shield',
       action: 'read',
