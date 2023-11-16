@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
+import Filters from 'src/components/Filters'
+
 const ResultadoEquipe = () => {
   return (
     <Grid container spacing={6} component='section'>
@@ -12,10 +14,11 @@ const ResultadoEquipe = () => {
         <Card component='article'>
           <CardHeader
             title='Resultado
-           Equipe'
+           por Equipe'
           ></CardHeader>
           <CardContent>
-            <Typography sx={{ mb: 2 }}>a</Typography>
+            <Filters />
+            <Typography sx={{ mb: 2 }}>EM DESENVOLVIMENTO</Typography>
           </CardContent>
         </Card>
       </Grid>

@@ -140,6 +140,7 @@ const Navigation = (props: Props) => {
   }
 
   const ScrollWrapper = hidden ? Box : PerfectScrollbar
+  console.log(props)
 
   return (
     <ThemeProvider theme={darkTheme}>

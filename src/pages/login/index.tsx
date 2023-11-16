@@ -185,7 +185,7 @@ const LoginPage = () => {
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ color: 'text.secondary', mr: 2 }}>Novo na plataforma?</Typography>
-                <Typography component={LinkStyled} href='/pages/auth/register-v1'>
+                <Typography component={LinkStyled} href='/register'>
                   Crie sua Conta
                 </Typography>
               </Box>
