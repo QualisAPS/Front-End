@@ -79,8 +79,8 @@ const defineRulesFor = (role: string, subject: string) => {
       '2-ciclo-relatorio-tematico',
       'profile'
     ])
-  } else if (role === 'coaps') {
-    can('read', ['home'])
+  } else if (role === 'equipe') {
+    can('read', ['home', 'integra', 'tipologia', 'estrutura'])
   } else if (role === 'diraps') {
     can('read', ['home'])
   } else {

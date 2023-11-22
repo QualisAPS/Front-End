@@ -40,7 +40,7 @@ const navigation = (): VerticalNavItemsType => {
 
     /* 1 ciclo */
     {
-      sectionTitle: '1° Ciclo',
+      sectionTitle: '1° Ciclo Gsap',
       action: 'read',
       subject: '1-ciclo'
     },
@@ -50,13 +50,13 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           title: 'Instrumento AA.GSAP',
-          path: '/painel-gsap',
+          path: '/instrumento-gestao',
           action: 'read',
           subject: 'instrumento-aa-gsap'
         },
         {
           title: 'Gráficos AA GSAP',
-          path: '/painel-nasf',
+          path: '/graficos-gsap',
           action: 'read',
           subject: 'graficos-aa-gsap'
         }
@@ -68,19 +68,19 @@ const navigation = (): VerticalNavItemsType => {
       children: [
         {
           title: 'Selecionar Padrões PAQ GSA',
-          path: '/painel-gsap',
+          path: '/selecionar-padroes-paq',
           action: 'read',
           subject: 'padroes-paq'
         },
         {
           title: 'Editar PAQ Gsap',
-          path: '/painel-nasf',
+          path: '/editar-paq-gsap',
           action: 'read',
           subject: 'editar-paq-gsap'
         },
         {
           title: 'Matriz PAQ GSAP',
-          path: '/painel-nasf',
+          path: '/matriz-paq-gsap',
           action: 'read',
           subject: 'matriz-paq-gsap'
         }
@@ -102,7 +102,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Certificação',
-      path: '/mapa',
+      path: '/certificacao',
       icon: 'tabler:smart-home',
       action: 'read',
       subject: 'certificacao'
@@ -117,7 +117,7 @@ const navigation = (): VerticalNavItemsType => {
 
     /* 2 ciclo */
     {
-      sectionTitle: '2° Ciclo',
+      sectionTitle: '2° Ciclo Gsap',
       action: 'read',
       subject: '2-ciclo'
     },
