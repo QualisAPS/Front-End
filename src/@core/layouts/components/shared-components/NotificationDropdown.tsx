@@ -194,9 +194,9 @@ const NotificationDropdown = (props: Props) => {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Typography variant='h5' sx={{ cursor: 'text' }}>
-              Notifications
+              Notificações
             </Typography>
-            <CustomChip skin='light' size='small' color='primary' label={`${notifications.length} New`} />
+            <CustomChip skin='light' size='small' color='primary' label={`${notifications.length} Novas`} />
           </Box>
         </MenuItem>
         <ScrollWrapper hidden={hidden}>
@@ -227,7 +227,7 @@ const NotificationDropdown = (props: Props) => {
           }}
         >
           <Button fullWidth variant='contained' onClick={handleDropdownClose}>
-            Read All Notifications
+            Leia todas as notificações
           </Button>
         </MenuItem>
       </Menu>

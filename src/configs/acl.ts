@@ -80,7 +80,25 @@ const defineRulesFor = (role: string, subject: string) => {
       'profile'
     ])
   } else if (role === 'equipe') {
-    can('read', ['home', 'integra', 'tipologia', 'estrutura'])
+    can('read', [
+      'home',
+      'integra',
+      'tipologia',
+      'estrutura',
+      '1-ciclo',
+      'instrumento-aa-gsap',
+      'graficos-aa-gsap',
+      'padroes-paq',
+      'editar-paq-gsap',
+      'avaliacao-in-loco',
+      'relatorios-tematicos',
+      'certificacao',
+      '2-ciclo',
+      '2-ciclo-instrumento-aa-gsap',
+      '2-ciclo-padroes-paq',
+      '2-ciclo-editar-paq-gsap',
+      'ajuda'
+    ])
   } else if (role === 'diraps') {
     can('read', ['home'])
   } else {
