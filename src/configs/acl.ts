@@ -100,7 +100,16 @@ const defineRulesFor = (role: string, subject: string) => {
       'ajuda'
     ])
   } else if (role === 'diraps') {
-    can('read', ['home'])
+    can('read', [
+      'home',
+      'monitoramento-gsaps',
+      'monitoramento-equipes',
+      'relatorios-tematicos',
+      '2-ciclo-painel-aa-gsap',
+      '2-ciclo-painel-paq-gsap',
+      'instrumento-aa-gsap-diraps',
+      'graficos-aa-gsap-diraps'
+    ])
   } else {
     can(['read', 'create', 'update', 'delete'], subject)
   }

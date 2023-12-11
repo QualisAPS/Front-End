@@ -46,7 +46,7 @@ const users: UserDataType[] = [
   {
     id: 5,
     role: 'diraps',
-    password: 'diraps',
+    password: 'diraps1',
     fullName: 'Diraps',
     username: 'diraps',
     email: 'diraps@qualis.com'

@@ -13,6 +13,12 @@ const navigation = (): VerticalNavItemsType => {
     },
 
     {
+      sectionTitle: 'Monitoramento Gsaps',
+      action: 'read',
+      subject: 'monitoramento-gsaps'
+    },
+
+    {
       title: 'Diagnóstico Inicial',
       icon: 'tabler:align-box-bottom-left',
       children: [
@@ -61,6 +67,47 @@ const navigation = (): VerticalNavItemsType => {
           subject: 'graficos-aa-gsap'
         }
       ]
+    },
+    {
+      title: '1° Ciclo Gsap',
+      icon: 'tabler:align-box-bottom-left',
+      children: [
+        {
+          title: 'Instrumento AA.GSAP',
+          path: '/instrumento-gestao',
+          action: 'read',
+          subject: 'instrumento-aa-gsap-diraps'
+        },
+        {
+          title: 'Gráficos AA GSAP',
+          path: '/graficos-gsap',
+          action: 'read',
+          subject: 'graficos-aa-gsap-diraps'
+        }
+      ]
+    },
+    {
+      title: '2° Ciclo Gsap',
+      icon: 'tabler:align-box-bottom-left',
+      children: [
+        {
+          title: 'Painel AA.GSAP',
+          path: '/painel-gsap',
+          action: 'read',
+          subject: '2-ciclo-painel-aa-gsap'
+        },
+        {
+          title: 'Painel PAQ GSAP',
+          path: '/painel-nasf',
+          action: 'read',
+          subject: '2-ciclo-painel-paq-gsap'
+        }
+      ]
+    },
+    {
+      sectionTitle: 'Monitoramento Equipes',
+      action: 'read',
+      subject: 'monitoramento-equipes'
     },
     {
       title: 'Paq Gsap',
