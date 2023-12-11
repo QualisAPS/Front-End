@@ -4,12 +4,12 @@ const path = require('path')
 /** @type {import('next').NextConfig} */
 
 // Remove this if you're not using Fullcalendar features
-const isProd = process.env.ENV === 'production'
+// const isProd = process.env.ENV === 'production'
+  // assetPrefix: isProd ? 'http://homologa2.qualisaps.unb.br/admin' : undefined,
 
 module.exports = {
   trailingSlash: true,
   reactStrictMode: false,
-  assetPrefix: isProd ? 'http://homologa2.qualisaps.unb.br/admin' : undefined,
   webpack: config => {
     config.resolve.alias = {
       ...config.resolve.alias,
