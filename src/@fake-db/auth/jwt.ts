@@ -86,6 +86,7 @@ mock.onPost('/jwt/login').reply(request => {
       accessToken,
       userData: { ...user, password: undefined }
     }
+    console.log(response)
 
     return [200, response]
   } else {

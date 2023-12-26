@@ -48,7 +48,7 @@ const shortcuts: ShortcutsType[] = [
     title: 'Ajuda',
     url: '/apps/calendar',
     icon: 'tabler:calendar',
-    subtitle: 'Appointments'
+    subtitle: 'ajuda'
   }
 ]
 

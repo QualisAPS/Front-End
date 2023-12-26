@@ -1,7 +1,9 @@
+import CertificacaoPage from 'src/screens/CertificacaoPage'
+
 const Certificacao = () => {
   return (
     <>
-      <p>certificacao</p>
+      <CertificacaoPage />
     </>
   )
 }
