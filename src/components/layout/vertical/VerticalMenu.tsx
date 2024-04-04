@@ -82,10 +82,10 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           icon={<i className='tabler-smart-home' />}
           suffix={<CustomChip label='3' size='small' color='error' round='true' />}
         >
-          <MenuItem href={`/dashboards/estrutura`}>Estrutura</MenuItem>
-          <MenuItem href={`/dashboards/tipologia`}>Tipologia</MenuItem>
+          <MenuItem href='/structure'>Estrutura</MenuItem>
+          <MenuItem href='/tipologia'>Tipologia</MenuItem>
         </SubMenu>
-        <MenuItem href='/about' icon={<i className='tabler-info-circle' />}>
+        <MenuItem href='/integrate-ses' icon={<i className='tabler-info-circle' />}>
           Integra SES
         </MenuItem>
       </Menu>
