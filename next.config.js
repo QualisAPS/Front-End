@@ -1,21 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
+const nextConfig = {
+  basePath: process.env.BASEPATH,
 
-// Remove this if you're not using Fullcalendar features
-// const isProd = process.env.ENV === 'production'
-  // assetPrefix: isProd ? 'http://homologa2.qualisaps.unb.br/admin' : undefined,
-
-module.exports = {
-  trailingSlash: true,
-  reactStrictMode: false,
-  webpack: config => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      apexcharts: path.resolve(__dirname, './node_modules/apexcharts-clevision')
-    }
-
-    return config
-  }
+  // TODO: below line is added to resolve twice event dispatch in the calendar reducer
+  reactStrictMode: false
 }
+
+module.exports = nextConfig
