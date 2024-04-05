@@ -54,7 +54,7 @@ export type Config = {
 
 const themeConfig: Config = {
   templateName: 'Qualis-APS',
-  settingsCookieName: 'Qualis-APS',
+  settingsCookieName: 'qualis-mui-next-demo-1',
   mode: 'system', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
   semiDark: false, // true, false

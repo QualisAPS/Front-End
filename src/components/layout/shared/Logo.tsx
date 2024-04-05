@@ -6,15 +6,20 @@ import { useEffect, useRef } from 'react'
 // Next Imports
 // import Img from 'next/image'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 // Third-party Imports
 import styled from '@emotion/styled'
 
 // Type Imports
+import type { Locale } from '@configs/i18n'
 import type { VerticalNavContextProps } from '@menu/contexts/verticalNavContext'
 
 // Config Imports
 import themeConfig from '@configs/themeConfig'
+
+// Util Imports
+import { getLocalizedUrl } from '@/utils/i18n'
 
 // Hook Imports
 import useVerticalNav from '@menu/hooks/useVerticalNav'
@@ -46,6 +51,7 @@ const Logo = () => {
   // Hooks
   const { isHovered, transitionDuration } = useVerticalNav()
   const { settings } = useSettings()
+  const { lang: locale } = useParams()
 
   // Vars
   const { layout } = settings
@@ -68,8 +74,8 @@ const Logo = () => {
   // You may return any JSX here to display a logo in the sidebar header
   // return <Img src='/next.svg' width={100} height={25} alt='logo' /> // for example
   return (
-    <Link href='/' className='flex items-center'>
-      <img src='/images/logos/logo_qualis.png' alt='' width={50} height={50} />
+    <Link href={getLocalizedUrl('/', locale as Locale)} className='flex items-center'>
+      <img src='/images/logos/logo_qualis.png' alt='Logo do programa Qualis-APS' width={50} height={50} />
       <LogoText
         ref={logoTextRef}
         isHovered={isHovered}

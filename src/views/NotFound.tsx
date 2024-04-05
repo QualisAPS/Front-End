@@ -45,11 +45,11 @@ const NotFound = ({ mode }: { mode: SystemMode }) => {
           <Typography className='font-medium text-8xl' color='text.primary'>
             404
           </Typography>
-          <Typography variant='h4'>Página não encontrada ⚠️</Typography>
-          <Typography>não encontramos a página que você procura.</Typography>
+          <Typography variant='h4'>Page Not Found ⚠️</Typography>
+          <Typography>we couldn&#39;t find the page you are looking for.</Typography>
         </div>
         <Button href='/' component={Link} variant='contained'>
-          Voltar para a Home
+          Back To Home
         </Button>
         <img
           alt='error-404-illustration'

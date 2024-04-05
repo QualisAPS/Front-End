@@ -38,7 +38,7 @@ import CustomTextField from '@core/components/mui/TextField'
 import themeConfig from '@configs/themeConfig'
 
 // Styled Component Imports
-import AuthIllustrationWrapper from '@/components/AuthIllustrationWrapper'
+import AuthIllustrationWrapper from './pages/auth/AuthIllustrationWrapper'
 
 type ErrorType = {
   message: string[]
