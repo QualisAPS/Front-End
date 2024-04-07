@@ -382,7 +382,7 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
               <tbody>
                 <tr>
                   <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
-                    No data available
+                    Nenhum dado disponível
                   </td>
                 </tr>
               </tbody>
@@ -405,6 +405,7 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
           </table>
         </div>
         <TablePagination
+          lang='pt-br'
           component={() => <TablePaginationComponent table={table} />}
           count={table.getFilteredRowModel().rows.length}
           rowsPerPage={table.getState().pagination.pageSize}
