@@ -92,7 +92,8 @@ const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
         <SubMenu
           label={'Diagnostico Inicial'}
           icon={<i className='tabler-smart-home' />}
-          suffix={<CustomChip label='3' size='small' color='error' round='true' />}
+
+          // suffix={<CustomChip label='3' size='small' color='error' round='true' />}
         >
           <MenuItem href='/structure'>Estrutura</MenuItem>
           <MenuItem href='/typology'>Tipologia</MenuItem>
