@@ -1,18 +1,38 @@
-// Third-party Imports
-import CredentialProvider from 'next-auth/providers/credentials'
-import GoogleProvider from 'next-auth/providers/google'
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
+// pages/api/auth/[...nextauth].js
 import type { NextAuthOptions } from 'next-auth'
-import type { Adapter } from 'next-auth/adapters'
+import CredentialProvider from 'next-auth/providers/credentials'
 
-const prisma = new PrismaClient()
+declare module 'next-auth' {
+  interface User {
+    token: {
+      token: string
+      type: string
+    }
+    user: [
+      {
+        id: number
+        nome: string
+        email: string
+        matricula: string | null
+        cpf: string
+      }
+    ]
+  }
+
+  interface Session {
+    accessToken?: string
+    user: {
+      id: number
+      nome: string
+      email: string
+      matricula: string | null
+      cpf: string
+    }
+  }
+}
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as Adapter,
-
-  // ** Configure one or more authentication providers
-  // ** Please refer to https://next-auth.js.org/configuration/options#providers for more `providers` options
+  // Configuração dos provedores
   providers: [
     CredentialProvider({
       // ** The name to display on the sign in form (e.g. 'Sign in with...')
@@ -65,70 +85,39 @@ export const authOptions: NextAuthOptions = {
           throw new Error(e.message)
         }
       }
-    }),
-
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     })
-
-    // ** ...add more providers here
   ],
 
-  // ** Please refer to https://next-auth.js.org/configuration/options#session for more `session` options
-  session: {
-    /*
-     * Choose how you want to save the user session.
-     * The default is `jwt`, an encrypted JWT (JWE) stored in the session cookie.
-     * If you use an `adapter` however, NextAuth default it to `database` instead.
-     * You can still force a JWT session by explicitly defining `jwt`.
-     * When using `database`, the session cookie will only contain a `sessionToken` value,
-     * which is used to look up the session in the database.
-     * If you use a custom credentials provider, user accounts will not be persisted in a database by NextAuth.js (even if one is configured).
-     * The option to use JSON Web Tokens for session tokens must be enabled to use a custom credentials provider.
-     */
-    strategy: 'jwt',
-
-    // ** Seconds - How long until an idle session expires and is no longer valid
-    maxAge: 30 * 24 * 60 * 60 // ** 30 days
-  },
-
-  // ** Please refer to https://next-auth.js.org/configuration/options#pages for more `pages` options
   pages: {
     signIn: '/login'
   },
 
-  // ** Please refer to https://next-auth.js.org/configuration/options#callbacks for more `callbacks` options
   callbacks: {
-    /*
-     * While using `jwt` as a strategy, `jwt()` callback will be called before
-     * the `session()` callback. So we have to add custom parameters in `token`
-     * via `jwt()` callback to make them accessible in the `session()` callback
-     */
     async jwt({ token, user }) {
       if (user) {
-        /*
-         * For adding custom parameters to user in session, we first need to add those parameters
-         * in token which then will be available in the `session()` callback
-         */
-        token.name = user.name
+        token.accessToken = user.token.token
+        token.user = user.user[0]
       }
 
       return token
     },
+
     async session({ session, token }) {
-      if (session.user) {
-        // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        session.user.name = token.name
+      if (token.accessToken) {
+        session.accessToken = token.accessToken as string
+      }
+
+      if (token.user) {
+        session.user = token.user as {
+          id: number
+          nome: string
+          email: string
+          matricula: string | null
+          cpf: string
+        }
       }
 
       return session
-    },
-
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log(user)
-
-      return true
     }
   }
 }

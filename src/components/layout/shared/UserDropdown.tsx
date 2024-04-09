@@ -43,6 +43,18 @@ const BadgeContentSpan = styled('span')({
   boxShadow: '0 0 0 2px var(--mui-palette-background-paper)'
 })
 
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: number
+      nome: string
+      email: string
+      matricula: string | null
+      cpf: string
+    }
+  }
+}
+
 const UserDropdown = () => {
   // States
   const [open, setOpen] = useState(false)
@@ -130,7 +142,7 @@ const UserDropdown = () => {
                     <Avatar />
                     <div className='flex items-start flex-col'>
                       <Typography className='font-medium' color='text.primary'>
-                        {session?.user?.name || ''}
+                        {session?.user?.nome || ''}
                       </Typography>
                       <Typography variant='caption'>{session?.user?.email || ''}</Typography>
                     </div>

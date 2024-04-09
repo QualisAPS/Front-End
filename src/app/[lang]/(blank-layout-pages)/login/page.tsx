@@ -6,7 +6,7 @@ import Login from '@views/Login'
 
 export const metadata: Metadata = {
   title: 'Login',
-  description: 'Login to your account'
+  description: 'Login Qualis-APS'
 }
 
 const LoginPage = () => {
