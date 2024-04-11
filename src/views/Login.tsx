@@ -48,7 +48,7 @@ type FormData = Input<typeof schema>
 
 const schema = object({
   email: string([minLength(1, 'Este campo é obrigatório'), email('Email inválido')]),
-  password: string([minLength(1, 'Este campo é obrigatório'), minLength(3, 'A senha deve ter pelo menos 5 caracteres')])
+  password: string([minLength(1, 'Este campo é obrigatório')])
 })
 
 const Login = () => {

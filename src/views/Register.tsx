@@ -5,169 +5,280 @@ import { useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 // MUI Imports
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
 
-// Third-party Imports
-import classnames from 'classnames'
+import { toast } from 'react-toastify'
 
 // Type Imports
-import type { SystemMode } from '@core/types'
+import type { SubmitHandler } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+
+import { valibotResolver } from '@hookform/resolvers/valibot'
+
+import type { Input } from 'valibot'
+import { email, maxLength, minLength, object, string } from 'valibot'
+
 import type { Locale } from '@configs/i18n'
 
 // Component Imports
 import Logo from '@components/layout/shared/Logo'
 import CustomTextField from '@core/components/mui/TextField'
 
-// Hook Imports
-import { useImageVariant } from '@core/hooks/useImageVariant'
-import { useSettings } from '@core/hooks/useSettings'
-
 // Util Imports
 import { getLocalizedUrl } from '@/utils/i18n'
 
-// Styled Custom Components
-const RegisterIllustration = styled('img')(({ theme }) => ({
-  zIndex: 2,
-  blockSize: 'auto',
-  maxBlockSize: 600,
-  maxInlineSize: '100%',
-  margin: theme.spacing(12),
-  [theme.breakpoints.down(1536)]: {
-    maxBlockSize: 550
-  },
-  [theme.breakpoints.down('lg')]: {
-    maxBlockSize: 450
-  }
-}))
+// Styled Component Imports
+import AuthIllustrationWrapper from '@views/pages/auth/AuthIllustrationWrapper'
 
-const MaskImg = styled('img')({
-  blockSize: 'auto',
-  maxBlockSize: 345,
-  inlineSize: '100%',
-  position: 'absolute',
-  insetBlockEnd: 0,
-  zIndex: -1
+type ErrorType = {
+  message: string[]
+}
+
+type FormData = Input<typeof schema>
+
+const schema = object({
+  email: string([minLength(1, 'Este campo é obrigatório'), email('Email inválido')]),
+  password: string([
+    minLength(1, 'Este campo é obrigatório'),
+    minLength(3, 'A senha deve ter pelo menos 5 caracteres')
+  ]),
+  nome: string([minLength(1, 'Este campo é obrigatório'), minLength(3, 'O nome deve ter pelo menos 3 caracteres')]),
+  matricula: string([minLength(1, 'Este campo é obrigatório'), maxLength(8, 'matricula com no maximo 8 caracteres')]),
+  cpf: string([minLength(1, 'Este campo é obrigatório'), maxLength(11, 'cpf com no maximo 11 caracteres')])
 })
 
-const Register = ({ mode }: { mode: SystemMode }) => {
+const Register = () => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
 
-  // Vars
-  const darkImg = '/images/pages/auth-mask-dark.png'
-  const lightImg = '/images/pages/auth-mask-light.png'
-  const darkIllustration = '/images/illustrations/auth/v2-register-dark.png'
-  const lightIllustration = '/images/illustrations/auth/v2-register-light.png'
-  const borderedDarkIllustration = '/images/illustrations/auth/v2-register-dark-border.png'
-  const borderedLightIllustration = '/images/illustrations/auth/v2-register-light-border.png'
-
   // Hooks
   const { lang: locale } = useParams()
-  const { settings } = useSettings()
-  const theme = useTheme()
-  const hidden = useMediaQuery(theme.breakpoints.down('md'))
-  const authBackground = useImageVariant(mode, lightImg, darkImg)
-
-  const characterIllustration = useImageVariant(
-    mode,
-    lightIllustration,
-    darkIllustration,
-    borderedLightIllustration,
-    borderedDarkIllustration
-  )
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
+  const [errorState, setErrorState] = useState<ErrorType | null>(null)
+
+  const router = useRouter()
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: valibotResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+      nome: '',
+      matricula: '',
+      cpf: ''
+    }
+  })
+
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    console.log(process.env)
+    const email = data.email
+    const password = data.password
+    const nome = data.nome
+    const matricula = data.matricula
+    const cpf = data.cpf
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL_V1}/usuarios`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password, nome, matricula, cpf })
+      })
+
+      const data = await res.json()
+
+      console.log(data, res.status)
+
+      if (res.status === 401) {
+        toast.error('Erro ao cadastrar')
+        throw new Error(JSON.stringify(data))
+      }
+
+      if (res.status === 200) {
+        toast.success('Cadastro Realizado')
+
+        router.push('/login')
+      }
+
+      return null
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
+  }
 
   return (
-    <div className='flex bs-full justify-center'>
-      <div
-        className={classnames(
-          'flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden',
-          {
-            'border-ie': settings.skin === 'bordered'
-          }
-        )}
-      >
-        <RegisterIllustration src={characterIllustration} alt='character-illustration' />
-        {!hidden && <MaskImg alt='mask' src={authBackground} />}
-      </div>
-      <div className='flex justify-center items-center bs-full bg-backgroundPaper !min-is-full p-6 md:!min-is-[unset] md:p-12 md:is-[480px]'>
-        <div className='absolute block-start-5 sm:block-start-[33px] inline-start-6 sm:inline-start-[38px]'>
-          <Logo />
-        </div>
-        <div className='flex flex-col gap-6 is-full sm:is-auto md:is-full sm:max-is-[400px] md:max-is-[unset] mbs-8 sm:mbs-11 md:mbs-0'>
-          <div className='flex flex-col gap-1'>
-            <Typography variant='h4'>Adventure starts here 🚀</Typography>
-            <Typography>Make your app management easy and fun!</Typography>
+    <AuthIllustrationWrapper>
+      <Card className='flex flex-col sm:is-[450px]'>
+        <CardContent className='sm:!p-12'>
+          <div className='flex justify-center mbe-6'>
+            <Logo />
           </div>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()} className='flex flex-col gap-6'>
-            <CustomTextField autoFocus fullWidth label='Username' placeholder='Enter your username' />
-            <CustomTextField fullWidth label='Email' placeholder='Enter your email' />
-            <CustomTextField
-              fullWidth
-              label='Password'
-              placeholder='············'
-              type={isPasswordShown ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton edge='end' onClick={handleClickShowPassword} onMouseDown={e => e.preventDefault()}>
-                      <i className={isPasswordShown ? 'tabler-eye-off' : 'tabler-eye'} />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
+          <div className='flex flex-col gap-1 mbe-6'>
+            <Typography variant='h4'>Faça seu cadastro</Typography>
+          </div>
+          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
+            <Controller
+              name='nome'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  {...field}
+                  autoFocus
+                  fullWidth
+                  label='Nome'
+                  placeholder='Digite seu nome'
+                  onChange={e => {
+                    field.onChange(e.target.value)
+                    errorState !== null && setErrorState(null)
+                  }}
+                  {...((errors.nome || errorState !== null) && {
+                    error: true,
+                    helperText: errors?.nome?.message || errorState?.message[0]
+                  })}
+                />
+              )}
+            />
+            <Controller
+              name='email'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  {...field}
+                  autoFocus
+                  fullWidth
+                  type='email'
+                  label='Email'
+                  placeholder='Digite seu email'
+                  onChange={e => {
+                    field.onChange(e.target.value)
+                    errorState !== null && setErrorState(null)
+                  }}
+                  {...((errors.email || errorState !== null) && {
+                    error: true,
+                    helperText: errors?.email?.message || errorState?.message[0]
+                  })}
+                />
+              )}
+            />
+            <Controller
+              name='cpf'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  {...field}
+                  autoFocus
+                  fullWidth
+                  label='CPF'
+                  placeholder='Digite seu CPF'
+                  onChange={e => {
+                    field.onChange(e.target.value)
+                    errorState !== null && setErrorState(null)
+                  }}
+                  {...((errors.cpf || errorState !== null) && {
+                    error: true,
+                    helperText: errors?.cpf?.message || errorState?.message[0]
+                  })}
+                />
+              )}
+            />
+            <Controller
+              name='matricula'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  {...field}
+                  autoFocus
+                  fullWidth
+                  label='Matricula'
+                  placeholder='Digite sua Matricula'
+                  onChange={e => {
+                    field.onChange(e.target.value)
+                    errorState !== null && setErrorState(null)
+                  }}
+                  {...((errors.matricula || errorState !== null) && {
+                    error: true,
+                    helperText: errors?.matricula?.message || errorState?.message[0]
+                  })}
+                />
+              )}
+            />
+            <Controller
+              name='password'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  {...field}
+                  fullWidth
+                  label='Senha'
+                  placeholder='············'
+                  id='login-password'
+                  type={isPasswordShown ? 'text' : 'password'}
+                  onChange={e => {
+                    field.onChange(e.target.value)
+                    errorState !== null && setErrorState(null)
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton edge='end' onClick={handleClickShowPassword} onMouseDown={e => e.preventDefault()}>
+                          <i className={isPasswordShown ? 'tabler-eye' : 'tabler-eye-off'} />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  {...(errors.password && { error: true, helperText: errors.password.message })}
+                />
+              )}
             />
             <FormControlLabel
               control={<Checkbox />}
               label={
                 <>
-                  <span>I agree to </span>
+                  <span>Eu concordo </span>
                   <Link className='text-primary' href='/' onClick={e => e.preventDefault()}>
-                    privacy policy & terms
+                    política de privacidade e termos
                   </Link>
                 </>
               }
             />
             <Button fullWidth variant='contained' type='submit'>
-              Sign Up
+              Inscrever-se
             </Button>
             <div className='flex justify-center items-center flex-wrap gap-2'>
-              <Typography>Already have an account?</Typography>
-              <Typography component={Link} href={getLocalizedUrl('/login', locale as Locale)} color='primary'>
-                Sign in instead
+              <Typography>Já tem uma conta?</Typography>
+              <Typography
+                component={Link}
+                href={getLocalizedUrl('pages/auth/login-v1', locale as Locale)}
+                color='primary'
+              >
+                Em vez disso, faça login
               </Typography>
             </div>
-            <Divider className='gap-2'>or</Divider>
-            <div className='flex justify-center items-center gap-1.5'>
-              <IconButton className='text-facebook' size='small'>
-                <i className='tabler-brand-facebook-filled' />
-              </IconButton>
-              <IconButton className='text-twitter' size='small'>
-                <i className='tabler-brand-twitter-filled' />
-              </IconButton>
-              <IconButton className='text-textPrimary' size='small'>
-                <i className='tabler-brand-github-filled' />
-              </IconButton>
-              <IconButton className='text-error' size='small'>
-                <i className='tabler-brand-google-filled' />
-              </IconButton>
-            </div>
           </form>
-        </div>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </AuthIllustrationWrapper>
   )
 }
 
