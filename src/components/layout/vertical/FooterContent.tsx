@@ -30,7 +30,6 @@ const FooterContent = () => {
     >
       <p>
         <span className='text-textSecondary'>{`© ${new Date().getFullYear()}, Desenvolvido por `}</span>
-        <span className='text-textSecondary'>{` by `}</span>
         <Link href='https://qualisaps.unb.br/' target='_blank' className='text-primary uppercase'>
           Qualis-APS
         </Link>

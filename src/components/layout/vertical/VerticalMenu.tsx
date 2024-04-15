@@ -90,8 +90,8 @@ const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
           Home
         </MenuItem>
         <SubMenu
-          label={'Diagnostico Inicial'}
-          icon={<i className='tabler-smart-home' />}
+          label={'Diagnóstico Inicial'}
+          icon={<i className='tabler-book-2' />}
 
           // suffix={<CustomChip label='3' size='small' color='error' round='true' />}
         >
@@ -100,6 +100,9 @@ const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
         </SubMenu>
         <MenuItem href='/integrate-ses' icon={<i className='tabler-info-circle' />}>
           Integra SES
+        </MenuItem>
+        <MenuItem href='/certification' icon={<i className='tabler-file-description' />}>
+          Certificação
         </MenuItem>
         {/*
         <SubMenu
