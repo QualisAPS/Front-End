@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
 import { useState, useEffect } from 'react'
 
@@ -7,16 +8,20 @@ import Grid from '@mui/material/Grid'
 import MenuItem from '@mui/material/MenuItem'
 
 // Type Imports
+import Button from '@mui/material/Button'
+
 import type { UsersType } from '@/types/apps/userTypes'
+import type { TypologyType } from '@/types/apps/typologyTypes'
 
 // Component Imports
 import CustomTextField from '@core/components/mui/TextField'
 
-const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersType[] }) => {
+const TableFilters = ({ setData, tableData }: { setData: any; tableData?: TypologyType[] }) => {
   // States
-  const [role, setRole] = useState<UsersType['role']>('')
-  const [plan, setPlan] = useState<UsersType['currentPlan']>('')
-  const [status, setStatus] = useState<UsersType['status']>('')
+  const [healthRegion, setHealthRegion] = useState<TypologyType['rs_nome']>('')
+  const [administrativeRegion, setAdministrativeRegion] = useState<TypologyType['ra_nome']>('')
+  const [status, setStatus] = useState<TypologyType['gsap_nome']>('')
+  const [ubsName, setUbsName] = useState<TypologyType['nome']>('')
   const [regiaoSaude, setRegiaoSaude] = useState([])
   const [gsap, setGsap] = useState([])
   const [ubs, setUbs] = useState([])
@@ -37,35 +42,42 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersT
       const data = await response.json()
 
       setter(data)
-    } catch (err) {
+    } catch (err: any) {
       console.error('Fetching error: ', err)
-      setError(err.message)
+      setError(err)
     }
   }
 
   useEffect(() => {
     // Chama a função fetchData para cada endpoint
-    fetchData('regiao-saude', setRegiaoSaude)
-    fetchData('gsap', setGsap)
-    fetchData('ubs', setUbs)
-    fetchData('regiao-admin', setRegiaoAdministrativa)
+    fetchData('regiao-saude', setRegiaoSaude as React.Dispatch<React.SetStateAction<any[]>>)
+    fetchData('gsap', setGsap as React.Dispatch<React.SetStateAction<any[]>>)
+    fetchData('ubs', setUbs as React.Dispatch<React.SetStateAction<any[]>>)
+    fetchData('regiao-admin', setRegiaoAdministrativa as React.Dispatch<React.SetStateAction<any[]>>)
 
     // Dependências vazias indicam que esse efeito roda apenas uma vez
   }, [])
 
   useEffect(() => {
     const filteredData = tableData?.filter(user => {
-      if (role && user.role !== role) return false
-      if (plan && user.currentPlan !== plan) return false
-      if (status && user.status !== status) return false
+      if (healthRegion && user.rs_nome !== healthRegion) return false
+      if (administrativeRegion && user.ra_nome !== administrativeRegion) return false
+      if (status && user.gsap_nome !== status) return false
+      if (ubsName && user.nome !== ubsName) return false
 
       return true
     })
 
     setData(filteredData)
-  }, [role, plan, status, tableData, setData])
+  }, [healthRegion, administrativeRegion, status, ubsName, tableData, setData])
 
-  console.log(regiaoSaude)
+  const clearFilters = () => {
+    setHealthRegion('')
+    setAdministrativeRegion('')
+    setStatus('')
+    setUbsName('')
+    setData(tableData)
+  }
 
   return (
     <CardContent>
@@ -75,10 +87,10 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersT
             label='Região de Saúde'
             select
             fullWidth
-            value={role} // Assegure-se que 'role' é o estado correto para este select
-            onChange={e => setRole(e.target.value)} // Atualiza o estado 'role' com o valor selecionado
+            value={healthRegion} // Assegure-se que 'role' é o estado correto para este select
+            onChange={e => setHealthRegion(e.target.value)} // Atualiza o estado 'role' com o valor selecionado
           >
-            {regiaoSaude.map(item => (
+            {(regiaoSaude as { id: string; nome: string }[]).map(item => (
               <MenuItem key={item.id} value={item.nome}>
                 {' '}
                 {item.nome}
@@ -92,11 +104,11 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersT
             label='Região Administrativa'
             fullWidth
             id='select-plan'
-            value={plan}
-            onChange={e => setPlan(e.target.value)}
+            value={administrativeRegion}
+            onChange={e => setAdministrativeRegion(e.target.value)}
             SelectProps={{ displayEmpty: true }}
           >
-            {regiaoAdministrativa.map(item => (
+            {(regiaoAdministrativa as { id: string; nome: string }[]).map(item => (
               <MenuItem key={item.id} value={item.nome}>
                 {' '}
                 {item.nome}
@@ -114,7 +126,7 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersT
             onChange={e => setStatus(e.target.value)}
             SelectProps={{ displayEmpty: true }}
           >
-            {gsap.map(item => (
+            {(gsap as { id: string; nome: string }[]).map(item => (
               <MenuItem key={item.id} value={item.nome}>
                 {' '}
                 {item.nome}
@@ -128,17 +140,22 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: UsersT
             label='Unidade Básica de Saúde'
             fullWidth
             id='select-status'
-            value={status}
-            onChange={e => setStatus(e.target.value)}
+            value={ubsName}
+            onChange={e => setUbsName(e.target.value)}
             SelectProps={{ displayEmpty: true }}
           >
-            {ubs.map(item => (
+            {(ubs as { id: string; nome: string }[]).map(item => (
               <MenuItem key={item.id} value={item.nome}>
                 {' '}
                 {item.nome}
               </MenuItem>
             ))}
           </CustomTextField>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Button variant='outlined' color='primary' onClick={clearFilters}>
+            Limpar Filtros
+          </Button>
         </Grid>
       </Grid>
     </CardContent>

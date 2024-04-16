@@ -1,3 +1,7 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
 // ** MUI Imports
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -5,11 +9,36 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-import type { TypologyType } from '@/types/apps/typologyTypes'
-
 import TypologyTable from './components/TypologyTable'
 
-const Typology = ({ userData }: { userData?: TypologyType[] }) => {
+const Typology = () => {
+  const [ubs, setUbs] = useState([])
+
+  const fetchData = async (endpoint: string, setter: React.Dispatch<React.SetStateAction<any[]>>) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_V1}/${endpoint}`, {
+        method: 'GET',
+        headers: { 'User-Agent': 'insomnia/2023.5.8' }
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      setter(data)
+    } catch (err) {
+      console.error('Fetching error: ', err)
+    }
+  }
+
+  useEffect(() => {
+    fetchData('ubs', setUbs as React.Dispatch<React.SetStateAction<any[]>>)
+
+    // Dependências vazias indicam que esse efeito roda apenas uma vez
+  }, [])
+
   return (
     <Grid container spacing={6} component='section'>
       <Grid item xs={12}>
@@ -52,7 +81,7 @@ const Typology = ({ userData }: { userData?: TypologyType[] }) => {
       </Grid>
       <Grid item xs={12}>
         <Card component='article'>
-          <TypologyTable tableData={userData} />
+          <TypologyTable tableData={ubs} />
         </Card>
       </Grid>
     </Grid>

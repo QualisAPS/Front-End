@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 // React Imports
@@ -9,10 +10,10 @@ import Link from 'next/link'
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
+import type { ButtonProps } from '@mui/material/Button'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Chip from '@mui/material/Chip'
-import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import TablePagination from '@mui/material/TablePagination'
@@ -37,27 +38,24 @@ import {
 import type { ColumnDef, FilterFn } from '@tanstack/react-table'
 import type { RankingInfo } from '@tanstack/match-sorter-utils'
 
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+
 import TablePaginationComponent from '@/components/TablePaginationComponent'
 
 import type { ThemeColor } from '@core/types'
-import type { UsersType } from '@/types/apps/userTypes'
+import type { TypologyType } from '@/types/apps/typologyTypes'
 
 // Component Imports
 
 import TableFilters from '../TableFilters'
 
-//import AddUserDrawer from './AddUserDrawer'
-import OptionMenu from '@core/components/option-menu'
+import DetailDialog from '../DetailDialog'
 
 import CustomTextField from '@core/components/mui/TextField'
-import CustomAvatar from '@core/components/mui/Avatar'
-
-// Util Imports
-import { getInitials } from '@/utils/getInitials'
 
 // Style Imports
 import tableStyles from '@core/styles/table.module.css'
-import type { TypologyType } from '@/types/apps/typologyTypes'
+import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -68,7 +66,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-type UsersTypeWithAction = UsersType & {
+type UsersTypeWithAction = TypologyType & {
   action?: string
 }
 
@@ -145,14 +143,27 @@ const columnHelper = createColumnHelper<UsersTypeWithAction>()
 
 const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
   // States
-  //const [addUserOpen, setAddUserOpen] = useState(false)
+
   const [rowSelection, setRowSelection] = useState({})
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState(...[tableData])
   const [globalFilter, setGlobalFilter] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const [dataDetail, setDataDetail] = useState({
+    nome: '',
+    nota_equipe_ponderada: 0,
+    nota_profissional_ponderada: 0,
+    nota_servicos_ponderada: 0,
+    nota_estrutura_ponderada: 0,
+    nota_insumos_ponderada: 0,
+    nota_tic_ponderada: 0,
+    total_esf: 0
+  })
 
   const columns = useMemo<ColumnDef<UsersTypeWithAction, any>[]>(
     () => [
+      /*
       {
         id: 'select',
         header: ({ table }) => (
@@ -175,55 +186,81 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
           />
         )
       },
-      columnHelper.accessor('fullName', {
-        header: 'Região de Saúde',
+      */
+      columnHelper.accessor('id', {
+        header: 'ID',
         cell: ({ row }) => (
           <div className='flex items-center gap-4'>
-            {getAvatar({ avatar: row.original.avatar, fullName: row.original.fullName })}
+            {/*  {getAvatar({ avatar: row.original.avatar, fullName: row.original.fullName })} */}
             <div className='flex flex-col'>
               <Typography color='text.primary' className='font-medium'>
-                {row.original.fullName}
+                {row.original.id}
               </Typography>
-              <Typography variant='body2'>{row.original.username}</Typography>
             </div>
           </div>
         )
       }),
-      columnHelper.accessor('role', {
-        header: 'Região Administrativa',
+      columnHelper.accessor('rs_nome', {
+        header: 'Região de Saúde',
         cell: ({ row }) => (
-          <div className='flex items-center gap-2'>
-            <Icon
-              className={userRoleObj[row.original.role].icon}
-              sx={{ color: `var(--mui-palette-${userRoleObj[row.original.role].color}-main)` }}
-            />
-            <Typography className='capitalize' color='text.primary'>
-              {row.original.role}
-            </Typography>
+          <div className='flex items-center gap-4'>
+            {/*  {getAvatar({ avatar: row.original.avatar, fullName: row.original.fullName })} */}
+            <div className='flex flex-col'>
+              <Typography color='text.primary' className='font-medium'>
+                {row.original.rs_nome}
+              </Typography>
+            </div>
           </div>
         )
       }),
-      columnHelper.accessor('currentPlan', {
+      columnHelper.accessor('ra_nome', {
+        header: 'Região Administrativa',
+        cell: ({ row }) => (
+          <div className='flex items-center gap-4'>
+            {/*  {getAvatar({ avatar: row.original.avatar, fullName: row.original.fullName })} */}
+            <div className='flex flex-col'>
+              <Typography color='text.primary' className='font-medium'>
+                {row.original.ra_nome}
+              </Typography>
+            </div>
+          </div>
+        )
+      }),
+      columnHelper.accessor('gsap_nome', {
         header: 'GSAP',
         cell: ({ row }) => (
           <Typography className='capitalize' color='text.primary'>
-            {row.original.currentPlan}
+            {row.original.gsap_nome}
           </Typography>
         )
       }),
-      columnHelper.accessor('billing', {
+      columnHelper.accessor('nome', {
         header: 'UBS',
-        cell: ({ row }) => <Typography>{row.original.billing}</Typography>
+        cell: ({ row }) => <Typography>{row.original.nome}</Typography>
       }),
-      columnHelper.accessor('status', {
-        header: 'Tipologia',
+      columnHelper.accessor('tipologia_2020', {
+        header: 'Tipologia - 2020',
         cell: ({ row }) => (
           <div className='flex items-center gap-3'>
             <Chip
               variant='tonal'
               className='capitalize'
-              label={row.original.status}
-              color={userStatusObj[row.original.status]}
+              label={row.original.tipologia_2020}
+              color={userStatusObj[row.original.tipologia_2020]}
+              size='small'
+            />
+          </div>
+        )
+      }),
+      columnHelper.accessor('tipologia_2022', {
+        header: 'Tipologia - 2022',
+        cell: ({ row }) => (
+          <div className='flex items-center gap-3'>
+            <Chip
+              variant='tonal'
+              className='capitalize'
+              label={row.original.tipologia_2022}
+              color={userStatusObj[row.original.tipologia_2022]}
               size='small'
             />
           </div>
@@ -231,37 +268,19 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
       }),
       columnHelper.accessor('action', {
         header: 'Ação',
-        cell: () => (
+        cell: ({ row }) => (
           <div className='flex items-center'>
-            <IconButton>
-              <i className='tabler-trash text-[22px] text-textSecondary' />
+            <IconButton onClick={() => handleTypologyDetail(row.original)}>
+              <i className='tabler-eye text-[22px] text-textSecondary' />
             </IconButton>
-            <IconButton>
-              <Link href={'apps/user/view'} className='flex'>
-                <i className='tabler-eye text-[22px] text-textSecondary' />
-              </Link>
-            </IconButton>
-            <OptionMenu
-              iconClassName='text-[22px] text-textSecondary'
-              options={[
-                {
-                  text: 'Download',
-                  icon: 'tabler-download text-[22px]',
-                  menuItemProps: { className: 'flex items-center gap-2 text-textSecondary' }
-                },
-                {
-                  text: 'Edit',
-                  icon: 'tabler-edit text-[22px]',
-                  menuItemProps: { className: 'flex items-center gap-2 text-textSecondary' }
-                }
-              ]}
-            />
           </div>
         ),
         enableSorting: false
       })
     ],
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
     []
   )
 
@@ -294,16 +313,23 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
     getFacetedMinMaxValues: getFacetedMinMaxValues()
   })
 
-  console.log(table.getFilteredRowModel())
+  const handleTypologyDetail = (data?: any) => {
+    setOpen(true)
+    setDataDetail(data)
+  }
 
-  const getAvatar = (params: Pick<UsersType, 'avatar' | 'fullName'>) => {
-    const { avatar, fullName } = params
-
-    if (avatar) {
-      return <CustomAvatar src={avatar} size={34} />
-    } else {
-      return <CustomAvatar size={34}>{getInitials(fullName as string)}</CustomAvatar>
-    }
+  const handleClose = () => {
+    setOpen(false)
+    setDataDetail({
+      nome: '',
+      nota_equipe_ponderada: 0,
+      nota_profissional_ponderada: 0,
+      nota_servicos_ponderada: 0,
+      nota_estrutura_ponderada: 0,
+      nota_insumos_ponderada: 0,
+      nota_tic_ponderada: 0,
+      total_esf: 0
+    })
   }
 
   return (
@@ -329,24 +355,87 @@ const TypologyTable = ({ tableData }: { tableData?: TypologyType[] }) => {
               placeholder='Buscar'
               className='is-full sm:is-auto'
             />
+            {/*
             <Button
               color='secondary'
               variant='tonal'
               startIcon={<i className='tabler-upload' />}
               className='is-full sm:is-auto'
             >
-              Export
-            </Button>
-            {/*
-            <Button
-              variant='contained'
-              startIcon={<i className='tabler-plus' />}
-              onClick={() => setAddUserOpen(!addUserOpen)}
-              className='is-full sm:is-auto'
-            >
-              Add New User
+              Exportar
             </Button>
             */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogTitle id='alert-dialog-title' sx={{ textAlign: 'center' }}>
+                {'Detalhes da Tipologia'}
+              </DialogTitle>
+              <DialogContent>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nome da UBS:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nome}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Equipe Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_equipe_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Profissional Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_profissional_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Serviços Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_servicos_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Estrutura Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_estrutura_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Insumos Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_insumos_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Tic Ponderada:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.nota_tic_ponderada}</strong>
+                  </p>
+                </div>
+                <div className='flex gap-3'>
+                  <Typography sx={{ mb: 2 }}>Nota Total ESF:</Typography>
+                  <p>
+                    {' '}
+                    <strong> {dataDetail.total_esf}</strong>
+                  </p>
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Fechar</Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
         <div className='overflow-x-auto'>
