@@ -31,6 +31,8 @@ import { email, minLength, object, string } from 'valibot'
 import { signIn } from 'next-auth/react'
 
 // Component Imports
+import { toast } from 'react-toastify'
+
 import Logo from '@components/layout/shared/Logo'
 import CustomTextField from '@core/components/mui/TextField'
 
@@ -68,8 +70,8 @@ const Login = () => {
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      email: 'admin@qualis.com',
-      password: 'admin'
+      email: '',
+      password: ''
     }
   })
 
@@ -87,6 +89,8 @@ const Login = () => {
     } else {
       if (res?.error) {
         const error = JSON.parse(res.error)
+
+        toast.error('Erro ao fazer login!')
 
         setErrorState(error)
       }

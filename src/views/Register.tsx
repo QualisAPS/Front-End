@@ -103,8 +103,6 @@ const Register = () => {
 
       const data = await res.json()
 
-      console.log(data, res.status)
-
       if (res.status === 401) {
         toast.error('Erro ao cadastrar')
         throw new Error(JSON.stringify(data))
