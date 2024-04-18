@@ -10,11 +10,12 @@ import MenuItem from '@mui/material/MenuItem'
 // Type Imports
 import Button from '@mui/material/Button'
 
+import CustomTextField from '@core/components/mui/TextField'
+
 import type { UsersType } from '@/types/apps/userTypes'
 import type { TypologyType } from '@/types/apps/typologyTypes'
 
 // Component Imports
-import CustomTextField from '@core/components/mui/TextField'
 
 const TableFilters = ({ setData, tableData }: { setData: any; tableData?: TypologyType[] }) => {
   // States
@@ -31,8 +32,7 @@ const TableFilters = ({ setData, tableData }: { setData: any; tableData?: Typolo
   const fetchData = async (endpoint: string, setter: React.Dispatch<React.SetStateAction<any[]>>) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_V1}/${endpoint}`, {
-        method: 'GET',
-        headers: { 'User-Agent': 'insomnia/2023.5.8' }
+        method: 'GET'
       })
 
       if (!response.ok) {

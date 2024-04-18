@@ -18,7 +18,6 @@ const Typology = () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_V1}/${endpoint}`, {
         method: 'GET',
-        headers: { 'User-Agent': 'insomnia/2023.5.8' }
       })
 
       if (!response.ok) {
