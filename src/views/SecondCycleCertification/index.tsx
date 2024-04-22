@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 
-
 // ** MUI Imports
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -12,14 +11,13 @@ import CardContent from '@mui/material/CardContent'
 
 import CertificationTable from './components/CertificationTable'
 
-const Certification = () => {
-
+const SecondCycleCertification = () => {
   const [equipes, setEquipes] = useState([])
 
   const fetchData = async (endpoint: string, setter: React.Dispatch<React.SetStateAction<any[]>>) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_V1}/${endpoint}`, {
-        method: 'GET',
+        method: 'GET'
       })
 
       if (!response.ok) {
@@ -39,8 +37,8 @@ const Certification = () => {
 
     // Dependências vazias indicam que esse efeito roda apenas uma vez
   }, [])
-  
-return (
+
+  return (
     <Grid container spacing={6} component='section'>
       <Grid item xs={12}>
         <Card component='article'>
@@ -73,4 +71,4 @@ return (
   )
 }
 
-export default Certification
+export default SecondCycleCertification

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Third-party Imports
 import classnames from 'classnames'
 

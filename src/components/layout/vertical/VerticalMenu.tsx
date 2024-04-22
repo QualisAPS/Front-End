@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 // Next Imports
@@ -101,9 +102,17 @@ const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
         <MenuItem href='/integrate-ses' icon={<i className='tabler-info-circle' />}>
           Integra SES
         </MenuItem>
-        <MenuItem href='/certification' icon={<i className='tabler-file-description' />}>
-          Certificação
-        </MenuItem>
+
+        <SubMenu label='1º Ciclo' icon={<i className='tabler-smart-home' />}>
+          <MenuItem href='/certification' icon={<i className='tabler-file-description' />}>
+            Certificação
+          </MenuItem>
+        </SubMenu>
+        <SubMenu label='2º Ciclo' icon={<i className='tabler-smart-home' />}>
+          <MenuItem href='/second-cycle-certification' icon={<i className='tabler-file-description' />}>
+            Certificação
+          </MenuItem>
+        </SubMenu>
         {/*
         <SubMenu
           label={dictionary['navigation'].dashboards}
